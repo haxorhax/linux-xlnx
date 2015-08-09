@@ -185,7 +185,7 @@
 	status = "okay";
 };
 
-&ps7_axi {
+&amba {
 
 	gpio-leds {
 		compatible = "gpio-leds";
