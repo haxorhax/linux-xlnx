@@ -1,18 +1,13 @@
 /*
- *  Copyright (C) 2011 - 2014 Xilinx
+ * Xilinx ZED board DTS
+ *
+ *  Copyright (C) 2011 - 2015 Xilinx
  *  Copyright (C) 2012 National Instruments Corp.
  *
- * This software is licensed under the terms of the GNU General Public
- * License version 2, as published by the Free Software Foundation, and
- * may be copied, distributed, and modified under those terms.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SPDX-License-Identifier:	GPL-2.0+
  */
 /dts-v1/;
-/include/ "zynq-7000.dtsi"
+#include "zynq-7000.dtsi"
 
 / {
 	model = "Zynq Zed Development Board";
@@ -30,7 +25,7 @@
 	};
 
 	chosen {
-		bootargs = "console=ttyPS0,115200 root=/dev/ram rw earlyprintk";
+		bootargs = "earlyprintk";
 		linux,stdout-path = &uart1;
 		stdout-path = &uart1;
 	};
@@ -39,7 +34,20 @@
 		compatible = "usb-nop-xceiv";
 		#phy-cells = <0>;
 	};
+};
 
+&clkc {
+	ps-clk-frequency = <33333333>;
+};
+
+&gem0 {
+	status = "okay";
+	phy-mode = "rgmii-id";
+	phy-handle = <&ethernet_phy>;
+
+	ethernet_phy: ethernet-phy@0 {
+		reg = <0>;
+	};
 };
 
 &qspi {
@@ -74,20 +82,6 @@
 			label = "qspi-bitstream";
 			reg = <0xC00000 0x400000>;
 		};
-	};
-};
-
-&clkc {
-	ps-clk-frequency = <33333333>;
-};
-
-&gem0 {
-	status = "okay";
-	phy-mode = "rgmii-id";
-	phy-handle = <&ethernet_phy>;
-
-	ethernet_phy: ethernet-phy@0 {
-		reg = <0>;
 	};
 };
 
